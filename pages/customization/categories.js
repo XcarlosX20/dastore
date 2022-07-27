@@ -49,7 +49,7 @@ const Categories = () => {
         >
           {categories &&
             categories.map((category) => (
-              <Card sx={{ minWidth: 180 }}>
+              <Card key={category} sx={{ minWidth: 180 }}>
                 <CardContent>
                   <Typography
                     sx={{ textTransform: "capitalize" }}

@@ -11,8 +11,8 @@ import moment from "moment";
 import PreviousSummaries from "../summaries/PreviousSummaries";
 const Summary = () => {
   const dispatch = useDispatch();
-  const loadSummary = () => dispatch(getSummaryAction());
-  useEffect(async () => {
+  useEffect(() => {
+    const loadSummary = async () => await dispatch(getSummaryAction());
     loadSummary();
   }, [dispatch]);
   const { summary } = useSelector((state) => state.request);

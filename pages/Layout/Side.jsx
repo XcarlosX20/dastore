@@ -43,6 +43,7 @@ const Side = (props) => {
             <List>
               {options.map((text) => (
                 <Link
+                  key={text}
                   href={"/customization/" + toPathName(text)}
                   activeStyle={{
                     backgroundColor: "#f1f1f1",
