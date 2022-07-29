@@ -17,6 +17,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import Image from "next/image";
 const Login = () => {
   const { loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -68,9 +69,11 @@ const Login = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box className="login trapecio">
-            <img
-              className="img-fluid login-img"
-              src="https://res.cloudinary.com/do5yybhwe/image/upload/v1645209426/shops/store-g0735b5b84_1280-min_phczyl.png"
+            <Image
+              height={"100%"}
+              width={"100%"}
+              layout="responsive"
+              src="/login-img.png"
               alt="login"
             />
           </Box>

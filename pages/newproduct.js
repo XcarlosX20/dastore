@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { getCompanyAction } from "../Actions/ActionsAuth";
@@ -16,6 +16,7 @@ import Compressor from "compressorjs";
 import { PhotoCamera } from "@mui/icons-material";
 import NumberFormatCustom from "../Hooks/NumberFormatCustom";
 import { useRouter } from "next/router";
+import Image from "next/image";
 const NewProduct = () => {
   let router = useRouter();
   const dispatch = useDispatch();
@@ -23,13 +24,23 @@ const NewProduct = () => {
   const [numberFormat, setNumberFormat] = useState("");
   const [image, setImage] = useState({ img_html: "", image_to_Upload: "" });
   const [categoriesSelect, setCategoriesSelect] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const getCompany = (token) => dispatch(getCompanyAction(token));
+    if (token) getCompany(token);
+  }, [dispatch]);
+
   //get store
   const { loading, error } = useSelector((state) => state.products);
-  const { _id, categories } = useSelector((state) => state.auth.company);
+  const categories = useSelector((state) =>
+    state.auth.company ? state.auth.company.categories : []
+  );
+  const _id = useSelector((state) =>
+    state.auth.company ? state.auth.company._id : ""
+  );
   const alert = useSelector((state) => state.alert.alert);
   const { img_html, image_to_Upload } = image;
   const addProducto = (product) => dispatch(addProductAction(product));
-  const getCompany = () => dispatch(getCompanyAction());
   const {
     register,
     handleSubmit,
@@ -89,7 +100,7 @@ const NewProduct = () => {
             <h2 className="text-center mb-4 font-weight-bold">
               Add new product
             </h2>
-            {loading ? <Loading /> : null}
+            {loading && <Loading />}
             {error ? (
               <div className="alert alert-danger mt-3" role="alert">
                 There was a mistake
@@ -148,8 +159,10 @@ const NewProduct = () => {
                 </Grid>
                 <div className="image-drop">
                   {img_html ? (
-                    <img
-                      className="img-fluid"
+                    <Image
+                      height={"100%"}
+                      width={"100%"}
+                      layout="responsive"
                       src={img_html}
                       alt={"product-show"}
                     />
@@ -206,7 +219,7 @@ const NewProduct = () => {
                   <option value="new">-- Crear nueva categoria -- </option>
                   {categories
                     ? categories.map((category) => (
-                        <option value={category}>
+                        <option key={category} value={category}>
                           {category.toUpperCase()}
                         </option>
                       ))

@@ -56,14 +56,14 @@ const PreviousSummaries = () => {
                   </Typography>
                   <Typography>
                     <b>Fee: </b>
-                    {"$" + summary.fee}
+                    <b>${summary.fee}</b>
                   </Typography>
                 </CardContent>
               </Card>
             ))
           ) : (
             <Typography textAlign={"center"}>
-              there're no summaries yet
+              there are no summaries yet
             </Typography>
           )}
           <Typography>

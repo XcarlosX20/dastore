@@ -44,7 +44,7 @@ const RequestsTable = () => {
             alignItems: "center",
           }}
         >
-          <Typography textAlign={"center"}>there're no orders yet</Typography>
+          <Typography textAlign={"center"}>there are no orders yet</Typography>
         </Box>
       ) : null}
     </>

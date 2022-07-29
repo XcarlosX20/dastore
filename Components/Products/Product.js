@@ -10,6 +10,7 @@ import {
 } from "../../Actions/ActionsProducts";
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
+import Image from "next/image";
 const Product = ({ singleProduct }) => {
   const dispatch = useDispatch();
   let router = useRouter();
@@ -50,17 +51,18 @@ const Product = ({ singleProduct }) => {
     <tr>
       <td>
         {img ? (
-          <img
-            className="img-view"
+          <Image
+            width="100%"
+            height="100%"
             loading="lazy"
+            loader={() => img}
             src={img}
             alt={productname}
           />
         ) : (
-          <img
+          <Image
             width="60px"
             height="60px"
-            className="img-fluid"
             src="https://res.cloudinary.com/do5yybhwe/image/upload/v1634941979/nophoto-removebg-preview-min_ve6bfv.png"
             alt={productname}
           />

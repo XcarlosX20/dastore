@@ -30,7 +30,9 @@ const EditProduct = () => {
   const [numberFormat, setNumberFormat] = useState(" ");
   const [image, setImage] = useState({ img_html: "", image_to_Upload: null });
   const [categoriesSelect, setCategoriesSelect] = useState("");
-  const categories = useSelector((state) => state.auth.company.categories);
+  const categories = useSelector((state) =>
+    state.auth.company ? state.auth.company.categories : []
+  );
   const editProduct = useSelector((state) => state.products.productEdit);
   const alert = useSelector((state) => state.alert.alert);
   const { loading, error } = useSelector((state) => state.products);
