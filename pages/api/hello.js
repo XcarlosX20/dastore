@@ -2,6 +2,8 @@
 import { axiosClient } from "../../config/axios";
 
 export default async function load(req, res) {
+  const { cookies } = req;
+  console.log(cookies);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjIxMmFmMTBjMDdlNDkzYmJjNTQ2Y2NhIn0sImlhdCI6MTY1ODg4ODA0OCwiZXhwIjoxNjU4OTc0NDQ4fQ.vPCjvgAe_s9MoFRgAN374_REGsRDEUqVRE7gTAp5QOg";
   const getCompany = await axiosClient.get("/api/auth/company", {
