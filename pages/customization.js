@@ -1,6 +1,4 @@
-import react from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import Categories from "./customization/Categories";
 import Side from "./Layout/Side";
 import { styled } from "@mui/system";
 
