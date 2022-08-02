@@ -58,6 +58,7 @@ export default function (state = initialState, action) {
         auth: true,
       };
     case LOGOUT:
+      document.cookie = `token=; path=/;`;
       localStorage.removeItem("token");
       tokenAuth();
       return {
