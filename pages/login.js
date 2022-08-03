@@ -51,7 +51,7 @@ const Login = () => {
         password: values.password,
       };
       await authCompany(company);
-      router.push("/products");
+      router.push("products");
     } else {
       Swal.fire({
         title: "all fields are required",
