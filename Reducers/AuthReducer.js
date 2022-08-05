@@ -24,7 +24,10 @@ export default function (state = initialState, action) {
         ...state,
         company: { ...state.company, categories: action.payload },
       };
-    case (AUTH_COMPANY_START, SETCATEGORIES_START, GET_COMPANY_START):
+
+    case AUTH_COMPANY_START:
+    case SETCATEGORIES_START:
+    case GET_COMPANY_START:
       return {
         ...state,
         loading: true,
@@ -42,9 +45,11 @@ export default function (state = initialState, action) {
         ...state,
         token: action.payload,
         loading: false,
+        auth: true,
       };
 
-    case (AUTH_COMPANY_ERROR, GET_COMPANY_ERROR):
+    case AUTH_COMPANY_ERROR:
+    case GET_COMPANY_ERROR:
       return {
         ...state,
         loading: false,

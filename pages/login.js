@@ -1,5 +1,4 @@
 import {
-  Container,
   Grid,
   Box,
   FormControl,
@@ -13,13 +12,13 @@ import Loading from "../Components/Utils/Loading";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { authCompanyAction } from "../Actions/ActionsAuth";
 //import { showAlertAction } from "../Actions/ActionsAlert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import Image from "next/image";
 const Login = () => {
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, auth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
   const authCompany = (company) => dispatch(authCompanyAction(company));
@@ -51,7 +50,6 @@ const Login = () => {
         password: values.password,
       };
       await authCompany(company);
-      router.push("products");
     } else {
       Swal.fire({
         title: "all fields are required",
@@ -59,13 +57,32 @@ const Login = () => {
       });
     }
   };
+  useEffect(() => {
+    if (auth) {
+      router.push("/products");
+    }
+  }, [auth]);
+  const dialog = {
+    zIndex: 10,
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    width: "100%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "transparent",
+  };
   return (
     <>
-      {alert != null ? (
+      {alert != null && (
         <div className={alert.class} role="alert">
           {alert.txt}
         </div>
-      ) : null}
+      )}
+      {loading && (
+        <Box sx={dialog}>
+          <Loading />
+        </Box>
+      )}
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box className="login trapecio">
