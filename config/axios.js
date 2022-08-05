@@ -1,6 +1,11 @@
 import axios from "axios";
+const backendApi = new URL(
+  process.env.NODE_ENV === "production"
+    ? process.env.NEXT_PUBLIC_MYAPP_BACKEND
+    : process.env.NEXT_PUBLIC_MYAPP_BACKEND_LOCAL
+);
 export const axiosClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MYAPP_BACKEND,
+  baseURL: backendApi.origin,
 });
 export const tokenAuth = (token) => {
   if (token) {
