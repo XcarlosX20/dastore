@@ -6,7 +6,7 @@ import Link from "next/link";
 import Drawer from "../../Components/Utils/Drawer";
 import { Box } from "@mui/system";
 import { getCompanyAction } from "../../Actions/ActionsAuth";
-const Header = () => {
+const Header = ({title}) => {
   let dispatch = useDispatch()
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,7 +27,7 @@ const Header = () => {
           justifyContent='flex-start'
           >
             <Link href={"/products"}>
-            <h1 className="text-light">{companyName}</h1>
+            <h1 className="text-light">{title || companyName }</h1>
           </Link>
           </Grid>
           <Grid

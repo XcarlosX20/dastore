@@ -1,15 +1,18 @@
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsAction } from "../Actions/ActionsProducts";
 import Header from "./Layout/Header";
 import Product from "../Components/Products/Product";
 import Search from "../Components/Searchbar/Search";
-const Products = () => {
+import { axiosClient } from "../config/axios";
+const Products = ({ getCompany, getProducts }) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const loadProducts = () => dispatch(getProductsAction());
-    loadProducts();
+    const loadProducts = (getProducts) => {
+      dispatch(getProductsAction(getProducts));
+    };
+    loadProducts(getProducts);
   }, [dispatch]);
   //state products list
   const { products, error, searchResults } = useSelector(
@@ -17,7 +20,7 @@ const Products = () => {
   );
   return (
     <>
-      <Header />
+      <Header title={getCompany.companyName} />
       <Container sx={{ paddingY: "1.5rem" }} maxWidth={"md"}>
         <h3 className="text-center">Listado de productos</h3>
         <Search products={products} />
@@ -55,12 +58,16 @@ const Products = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((singleProduct) => (
-                  <Product
-                    key={singleProduct._id}
-                    singleProduct={singleProduct}
-                  />
-                ))}
+                {getProducts.length || products.length ? (
+                  getProducts.map((singleProduct) => (
+                    <Product
+                      key={singleProduct._id}
+                      singleProduct={singleProduct}
+                    />
+                  ))
+                ) : (
+                  <Typography>You still have no products added</Typography>
+                )}
               </tbody>
             </table>
           )}
@@ -74,5 +81,16 @@ const Products = () => {
     </>
   );
 };
-
+export const getServerSideProps = async ({ req, res }) => {
+  const token = req.headers.cookie.split("=")[1];
+  axiosClient.defaults.headers.common["x-auth-token"] = token;
+  const getCompany = await axiosClient.get(`/api/auth/company`);
+  const getProducts = await axiosClient.get("/api/products");
+  return {
+    props: {
+      getCompany: getCompany.data,
+      getProducts: getProducts.data,
+    },
+  };
+};
 export default Products;
