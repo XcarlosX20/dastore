@@ -4,6 +4,7 @@ const backendApi = new URL(
     ? process.env.NEXT_PUBLIC_MYAPP_BACKEND
     : process.env.NEXT_PUBLIC_MYAPP_BACKEND_LOCAL
 );
+console.log(backendApi.origin);
 export const axiosClient = axios.create({
   baseURL: backendApi.origin,
 });

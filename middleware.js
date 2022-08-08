@@ -24,5 +24,5 @@ export default async function handler(req) {
   }
 }
 export const config = {
-  matcher: ["/products", "/customization/:path*", "/orders"],
+  matcher: ["/products", "/customization/:path*", "/orders", "/newproduct"],
 };
