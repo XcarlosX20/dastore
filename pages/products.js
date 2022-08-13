@@ -6,7 +6,7 @@ import Header from "./Layout/Header";
 import Product from "../Components/Products/Product";
 import Search from "../Components/Searchbar/Search";
 import { axiosClient } from "../config/axios";
-const Products = ({ getCompany, getProducts }) => {
+const Products = ({ getProducts }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const loadProducts = (getProducts) => {
@@ -20,7 +20,7 @@ const Products = ({ getCompany, getProducts }) => {
   );
   return (
     <>
-      <Header title={getCompany.companyName} />
+      <Header />
       <Container sx={{ paddingY: "1.5rem" }} maxWidth={"md"}>
         <h3 className="text-center">Listado de productos</h3>
         <Search products={products} />
@@ -84,11 +84,9 @@ const Products = ({ getCompany, getProducts }) => {
 export const getServerSideProps = async ({ req, res }) => {
   const token = req.headers.cookie.split("=")[1];
   axiosClient.defaults.headers.common["x-auth-token"] = token;
-  const getCompany = await axiosClient.get(`/api/auth/company`);
   const getProducts = await axiosClient.get("/api/products");
   return {
     props: {
-      getCompany: getCompany.data,
       getProducts: getProducts.data,
     },
   };
