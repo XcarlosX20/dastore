@@ -56,20 +56,14 @@ const addProductErr = (boolean) => ({
 });
 
 //GET PRODUCTS FROM ACTION
-export const getProductsAction = (products) => {
-  console.log(products);
+export const getProductsAction = () => {
   return async (dispatch) => {
-    console.log(products);
     dispatch(getProducts());
-    if (!products.length) {
-      try {
-        const res = await axiosClient.get("/api/products");
-        dispatch(getProductsSuccess(res.data));
-      } catch {
-        dispatch(getProductsError(true));
-      }
-    } else {
-      dispatch(getProductsSuccess(products));
+    try {
+      const res = await axiosClient.get("/api/products");
+      dispatch(getProductsSuccess(res.data));
+    } catch {
+      dispatch(getProductsError(true));
     }
   };
 };

@@ -5,14 +5,13 @@ import { getProductsAction } from "../Actions/ActionsProducts";
 import Header from "./Layout/Header";
 import Product from "../Components/Products/Product";
 import Search from "../Components/Searchbar/Search";
-import { axiosClient } from "../config/axios";
-const Products = ({ getProducts }) => {
+const Products = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const loadProducts = (getProducts) => {
-      dispatch(getProductsAction(getProducts));
+    const loadProducts = () => {
+      dispatch(getProductsAction());
     };
-    loadProducts(getProducts);
+    loadProducts();
   }, [dispatch]);
   //state products list
   const { products, error, searchResults } = useSelector(
@@ -58,8 +57,8 @@ const Products = ({ getProducts }) => {
                 </tr>
               </thead>
               <tbody>
-                {getProducts.length || products.length ? (
-                  getProducts.map((singleProduct) => (
+                {products.length ? (
+                  products.map((singleProduct) => (
                     <Product
                       key={singleProduct._id}
                       singleProduct={singleProduct}
@@ -80,15 +79,5 @@ const Products = ({ getProducts }) => {
       </Container>
     </>
   );
-};
-export const getServerSideProps = async ({ req, res }) => {
-  const token = req.headers.cookie.split("=")[1];
-  axiosClient.defaults.headers.common["x-auth-token"] = token;
-  const getProducts = await axiosClient.get("/api/products");
-  return {
-    props: {
-      getProducts: getProducts.data,
-    },
-  };
 };
 export default Products;
