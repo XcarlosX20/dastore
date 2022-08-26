@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 //  import { useDispatch } from 'react-redux';
 // import { useSelector } from 'react-redux';
 // import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-const Loading = ({width, height}) => {
+const Loading = (props) => {
 const Loader = styled.div`
 border-radius: 50%;
 width: ${props => (props.width || '11rem')};
@@ -50,18 +50,13 @@ height:  ${props => (props.height || '11rem')};
   }
 }
 `;
-const dialog = {
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  width: '100%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'transparent',
+const dialogcss = {
+  ...props.dialog,
 };
     return ( 
         <>
-          <Box sx={dialog}>
-          <Loader width={width} height={height}/>
+          <Box sx={dialogcss}>
+          <Loader width={props.width} height={props.height}/>
           </Box>
         </>
      );

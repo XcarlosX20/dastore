@@ -13,7 +13,7 @@ const Search = ({ products }) => {
   const [value, setValue] = useState("");
   useEffect(() => {
     const searchByKeywords = () => {
-      if (value.length > 0) {
+      if (value.length > 3) {
         const checkProducts = products.filter((product) => {
           return (
             product.productname.toLowerCase().includes(value.toLowerCase()) ||
@@ -22,10 +22,10 @@ const Search = ({ products }) => {
         });
         dispatch(getSearchResultsAction(checkProducts));
       }
-    }
-    searchByKeywords()
+    };
+    searchByKeywords();
   }, [value]);
-  useEffect(() => dispatch(getSearchResultsAction(null)),[value === ""])
+  useEffect(() => dispatch(getSearchResultsAction(null)), [value === ""]);
   return (
     <>
       <Container

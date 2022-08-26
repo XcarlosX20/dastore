@@ -1,10 +1,11 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsAction } from "../Actions/ActionsProducts";
 import Header from "./Layout/Header";
 import Product from "../Components/Products/Product";
 import Search from "../Components/Searchbar/Search";
+import Loading from "../Components/Utils/Loading";
 const Products = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -14,9 +15,18 @@ const Products = () => {
     loadProducts();
   }, [dispatch]);
   //state products list
-  const { products, error, searchResults } = useSelector(
+  const { products, error, searchResults, loading } = useSelector(
     (state) => state.products
   );
+  const dialog = {
+    zIndex: 10,
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    width: "100%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "transparent",
+  };
   return (
     <>
       <Header />
@@ -57,6 +67,11 @@ const Products = () => {
                 </tr>
               </thead>
               <tbody>
+                {loading && (
+                  <Box sx={dialog}>
+                    <Loading />
+                  </Box>
+                )}
                 {products.length ? (
                   products.map((singleProduct) => (
                     <Product
@@ -64,9 +79,20 @@ const Products = () => {
                       singleProduct={singleProduct}
                     />
                   ))
-                ) : (
-                  <Typography>You still have no products added</Typography>
-                )}
+                ) : !loading ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      height: "10rem",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography textAlign={"center"}>
+                      there are no orders yet
+                    </Typography>
+                  </Box>
+                ) : null}
               </tbody>
             </table>
           )}

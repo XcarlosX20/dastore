@@ -146,7 +146,6 @@ const Login = () => {
                   Login
                 </Button>
               </Grid>
-              {loading ? <Loading width="10rem" height="10rem" /> : null}
             </form>
           </Grid>
         </Grid>

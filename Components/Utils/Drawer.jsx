@@ -7,10 +7,14 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  ListItemButton,
 } from "@mui/material";
-import Inventory from "@mui/icons-material/Inventory";
-import MailIcon from "@mui/icons-material/Mail";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import GridViewIcon from '@mui/icons-material/GridView';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Menu from "@mui/icons-material/Menu";
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { logoutAction } from "../../Actions/ActionsAuth";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
@@ -45,7 +49,7 @@ export default function Drawer() {
         <Link href={"/orders"}>
           <ListItem button>
             <ListItemIcon>
-              <MailIcon />
+              <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary={"Orders"} />
           </ListItem>
@@ -53,7 +57,7 @@ export default function Drawer() {
         <Link href={"/products"}>
           <ListItem button>
             <ListItemIcon>
-              <Inventory />
+              <GridViewIcon />
             </ListItemIcon>
             <ListItemText primary={'Products'}>
             </ListItemText>
@@ -62,7 +66,7 @@ export default function Drawer() {
         <Link href={"/customization/sales-summary"}>
           <ListItem button>
             <ListItemIcon>
-              <Inventory />
+              <MonetizationOnIcon />
             </ListItemIcon>
             <ListItemText primary={'Summary of sales'}>
             </ListItemText>
@@ -71,23 +75,26 @@ export default function Drawer() {
         <Link exact href={"/customization"}>
           <ListItem button>
             <ListItemIcon>
-              <Inventory />
+              <DriveFileRenameOutlineIcon  />
             </ListItemIcon>
             <ListItemText primary={'Customatization'}>
             </ListItemText>
           </ListItem>
         </Link>
-        <ListItem>
-          <Link href={"/login"}>
-            <Button
+        <Link href={"/login"}>
+        <ListItemButton
             onClick={() => {
               dispatch(logoutAction())
             }}
           >
+          <ListItemIcon>
+            <LogoutIcon/> 
+           </ListItemIcon>
+           <ListItemText>
             Log out
-          </Button>
-          </Link>
-        </ListItem>
+            </ListItemText>     
+        </ListItemButton>
+         </Link>
       </List>
     </Box>
   );

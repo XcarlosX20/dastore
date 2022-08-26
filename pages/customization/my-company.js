@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Side from "../Layout/Side";
 import { Twitter } from "@mui/icons-material";
 import { Instagram } from "@mui/icons-material";
@@ -7,8 +7,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
-import { IconButton, Grid } from "@mui/material";
+import { IconButton, Grid, Button } from "@mui/material";
+import Head from "next/head";
 const Mycompany = () => {
   const [employee, setEmployee] = useState([
     {
@@ -32,16 +32,78 @@ const Mycompany = () => {
       img: "https://www.europeanceo.com/wp-content/uploads/2017/08/CEO-magic-touch.jpg",
     },
   ]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [value, setValue] = useState("aaa");
+  const [oldValue, setOldValue] = useState("");
   // evaluar si un usuario de twitter existe
-  const getUserTwitter = async () => {
-    const url = "https://api.twitter.com/2/users/by/username/CuentaMister";
-    const api = await axios.get(url);
-    console.log(api);
+  // const getUserTwitter = async () => {
+  //   const url = "https://api.twitter.com/2/users/by/username/CuentaMister";
+  //   const api = await axios.get(url);
+  //   console.log(api);
+  // };
+  const aboutRef = useRef(null);
+  const trixRef = useRef(null);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const newDescription = aboutRef.current.value;
   };
+  const editCompany = () => {
+    if (aboutRef.current.value) {
+      setValue(aboutRef.current.value);
+      setOldValue(aboutRef.current.value);
+    }
+    setIsEdit(false);
+  };
+  const initEdit = () => {
+    console.log(aboutRef.current.value);
+    setOldValue(aboutRef.current.value);
+    setIsEdit(true);
+  };
+  const cancelEdit = () => {
+    setIsEdit(false);
+    setValue(oldValue);
+  };
+  // useEffect(() => {
+  //   if (aboutRef.current.value) {
+  //     setValue(aboutRef.current.value);
+  //   }
+  // }, [isEdit]);
+  useEffect(() => {
+    trixRef.current.innerHTML = oldValue;
+  }, [value, isEdit]);
   return (
     <>
+      <Head>
+        <title>My company</title>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css"
+        ></link>
+        <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"
+          type="text/javascript"
+        ></script>
+      </Head>
       <Side>
         <h3>Acerca de la empresa</h3>
+        <form onSubmit={onSubmit} className="trix-editor">
+          <input
+            defaultValue={value}
+            value={value}
+            ref={aboutRef}
+            id="x"
+            type="hidden"
+            name="about"
+          ></input>
+          <trix-editor ref={trixRef} onClick={initEdit} input="x"></trix-editor>
+          <Button hidden={!isEdit} type="submit" onClick={editCompany}>
+            edit
+          </Button>
+          <Button hidden={!isEdit} onClick={cancelEdit}>
+            cancel
+          </Button>
+        </form>
         <div>
           <p>mision:</p>
           <p>vision:</p>

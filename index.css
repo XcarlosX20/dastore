@@ -128,7 +128,9 @@ button[type="submit"]:disabled {
 .format-amount-summary .format-amount span {
   font-size: 16px;
 }
-
+trix-editor strong {
+  font-weight: bold;
+}
 @media (min-width: 768px) {
   .search-bar {
     width: 75% !important;
