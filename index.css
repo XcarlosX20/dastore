@@ -131,6 +131,16 @@ button[type="submit"]:disabled {
 trix-editor strong {
   font-weight: bold;
 }
+.form-employees{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 3rem;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.form-employees input{
+  font-size: 1rem;
+}
 @media (min-width: 768px) {
   .search-bar {
     width: 75% !important;

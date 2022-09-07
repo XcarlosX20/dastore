@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 import {
   Box,
   SwipeableDrawer,
@@ -7,104 +7,102 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemButton,
-} from "@mui/material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import GridViewIcon from '@mui/icons-material/GridView';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Menu from "@mui/icons-material/Menu";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import { logoutAction } from "../../Actions/ActionsAuth";
-import { useDispatch } from "react-redux";
-import Link from "next/link";
+  ListItemButton
+} from '@mui/material'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import GridViewIcon from '@mui/icons-material/GridView'
+import LogoutIcon from '@mui/icons-material/Logout'
+import Menu from '@mui/icons-material/Menu'
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
+import { logoutAction } from '../../Actions/ActionsAuth'
+import { useDispatch } from 'react-redux'
+import Link from 'next/link'
 
-export default function Drawer() {
-  let dispatch = useDispatch();
+export default function Drawer () {
+  const dispatch = useDispatch()
   const [state, setState] = React.useState({
     top: false,
-    left: false,
-  });
+    left: false
+  })
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
-      return;
+      return
     }
 
-    setState({ ...state, [anchor]: open });
-  };
+    setState({ ...state, [anchor]: open })
+  }
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-      role="presentation"
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <Link href={"/orders"}>
+        <Link href='/orders'>
           <ListItem button>
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>
-            <ListItemText primary={"Orders"} />
+            <ListItemText primary='Orders' />
           </ListItem>
         </Link>
-        <Link href={"/products"}>
+        <Link href='/products'>
           <ListItem button>
             <ListItemIcon>
               <GridViewIcon />
             </ListItemIcon>
-            <ListItemText primary={'Products'}>
-            </ListItemText>
+            <ListItemText primary='Products' />
           </ListItem>
         </Link>
-        <Link href={"/customization/sales-summary"}>
+        <Link href='/customization/sales-summary'>
           <ListItem button>
             <ListItemIcon>
               <MonetizationOnIcon />
             </ListItemIcon>
-            <ListItemText primary={'Summary of sales'}>
-            </ListItemText>
+            <ListItemText primary='Summary of sales' />
           </ListItem>
         </Link>
-        <Link exact href={"/customization"}>
+        <Link exact href='/customization'>
           <ListItem button>
             <ListItemIcon>
-              <DriveFileRenameOutlineIcon  />
+              <DriveFileRenameOutlineIcon />
             </ListItemIcon>
-            <ListItemText primary={'Customatization'}>
-            </ListItemText>
+            <ListItemText primary='Customatization' />
           </ListItem>
         </Link>
-        <Link href={"/login"}>
-        <ListItemButton
+        <Link href='/login'>
+          <ListItemButton
             onClick={() => {
               dispatch(logoutAction())
             }}
           >
-          <ListItemIcon>
-            <LogoutIcon/> 
-           </ListItemIcon>
-           <ListItemText>
-            Log out
-            </ListItemText>     
-        </ListItemButton>
-         </Link>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText>
+              Log out
+            </ListItemText>
+          </ListItemButton>
+        </Link>
       </List>
     </Box>
-  );
-  const anchor = "left";
+  )
+  const anchor = 'left'
   return (
     <div>
-      <Button color={"light"} onClick={toggleDrawer(anchor, true)}>
+      <Button color='light' onClick={toggleDrawer(anchor, true)}>
         <Menu />
       </Button>
-      <SwipeableDrawer sx={{ zIndex: (theme) => theme.zIndex.drawer + 2 }}
+      <SwipeableDrawer
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 2 }}
         anchor={anchor}
         open={state[anchor]}
         onClose={toggleDrawer(anchor, false)}
@@ -113,5 +111,5 @@ export default function Drawer() {
         {list(anchor)}
       </SwipeableDrawer>
     </div>
-  );
+  )
 }

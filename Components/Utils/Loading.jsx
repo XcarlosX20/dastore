@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
-import { Box } from '@mui/system';
+import { Box } from '@mui/system'
 // import { useState } from 'react';
 // import { useEffect } from 'react';
 //  import { useDispatch } from 'react-redux';
 // import { useSelector } from 'react-redux';
 // import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const Loading = (props) => {
-const Loader = styled.div`
+  const Loader = styled.div`
 border-radius: 50%;
 width: ${props => (props.width || '11rem')};
 height:  ${props => (props.height || '11rem')};
@@ -49,17 +49,17 @@ height:  ${props => (props.height || '11rem')};
     transform: rotate(360deg);
   }
 }
-`;
-const dialogcss = {
-  ...props.dialog,
-};
-    return ( 
-        <>
-          <Box sx={dialogcss}>
-          <Loader width={props.width} height={props.height}/>
-          </Box>
-        </>
-     );
+`
+  const dialogcss = {
+    ...props.dialog
+  }
+  return (
+    <>
+      <Box sx={dialogcss}>
+        <Loader width={props.width} height={props.height} />
+      </Box>
+    </>
+  )
 }
- 
-export default Loading;
+
+export default Loading
