@@ -92,7 +92,7 @@ export function setInfoCompanyAction({ property, data }) {
           icon: "success",
           title: "Changes saved",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2000,
         });
       }
     } catch (err) {
