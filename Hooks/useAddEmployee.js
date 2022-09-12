@@ -1,30 +1,30 @@
-import { axiosClient } from "../config/axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setInfoCompanyAction } from "../Actions/ActionsCompany";
+import { axiosClient } from '../config/axios'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setInfoCompanyAction } from '../Actions/ActionsCompany'
 import {
   Cancel,
   Facebook,
   Instagram,
   LinkedIn,
-  Twitter,
-} from "@mui/icons-material";
+  Twitter
+} from '@mui/icons-material'
 const useAddEmployee = () => {
-  const dispatch = useDispatch();
-  const [newEmployee, setNewEmployee] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+  const dispatch = useDispatch()
+  const [newEmployee, setNewEmployee] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const handleOpen = () => setIsOpen(true)
+  const handleClose = () => setIsOpen(false)
 
   const socialMedia = {
-    instagram: { placeholder: "Enter the username", icon: <Instagram /> },
+    instagram: { placeholder: 'Enter the username', icon: <Instagram /> },
     facebook: { placeholder: "Enter the profile's url", icon: <Facebook /> },
     linkedIn: { placeholder: "Enter the profile's url", icon: <LinkedIn /> },
-    twitter: { placeholder: "Enter the username", icon: <Twitter /> },
-  };
+    twitter: { placeholder: 'Enter the username', icon: <Twitter /> }
+  }
   const newEmployeeFn = (cb) => {
-    setNewEmployee(cb);
-  };
+    setNewEmployee(cb)
+  }
   //   const newEmployee = {
   //     name: "jon Doe",
   //     role: "Doctor",
@@ -35,14 +35,13 @@ const useAddEmployee = () => {
     if (newEmployee) {
       dispatch(
         setInfoCompanyAction({
-          property: ["employees"],
-          data: { employees: newEmployee },
+          property: ['employees'],
+          data: { employees: newEmployee }
         })
-      );
+      )
     }
-    return;
-  }, [newEmployee]);
-  return { isOpen, handleOpen, handleClose, newEmployeeFn, socialMedia };
-};
+  }, [newEmployee])
+  return { isOpen, handleOpen, handleClose, newEmployeeFn, socialMedia }
+}
 
-export default useAddEmployee;
+export default useAddEmployee

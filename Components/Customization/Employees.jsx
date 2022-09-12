@@ -16,11 +16,11 @@ const Employees = ({ employees }) => {
     boxShadow: 24,
     p: 4,
     overflowY: 'auto',
-    zIndex: 5,
+    zIndex: 5
   }
   return (
     <>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>Add new employee</Button>
       <Modal
         open={isOpen}
         onClose={handleClose}
