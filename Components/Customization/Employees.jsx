@@ -1,36 +1,14 @@
-import { Twitter, Instagram } from '@mui/icons-material'
-import { IconButton, Box, Card, CardContent, CardMedia, Grid, Typography, Button, Modal } from '@mui/material'
-import useAddEmployee from '../../Hooks/useAddEmployee'
+import { Twitter, Instagram, Delete } from '@mui/icons-material'
+import { IconButton, Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+
 import FormEmployee from './FormEmployee'
 const Employees = ({ employees }) => {
-  const { isOpen, handleOpen, handleClose } = useAddEmployee()
-
-  const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    maxHeight: '80vh',
-    width: 400,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    overflowY: 'auto',
-    zIndex: 5
+  const deleteCategory = (category) => {
+    console.log(category)
   }
   return (
     <>
-      <Button onClick={handleOpen}>Add new employee</Button>
-      <Modal
-        open={isOpen}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={styleModal}>
-          <FormEmployee />
-        </Box>
-      </Modal>
+      <FormEmployee employees={employees} />
       <Grid container direction='row' gap={2}>
         {employees.map((item) => (
           <Card
@@ -71,6 +49,16 @@ const Employees = ({ employees }) => {
               image={item.img}
               alt='Live from space album cover'
             />
+            <Box>
+              <IconButton
+                size='small'
+                color='error'
+                onClick={() => deleteCategory(item)}
+              >
+
+                <Delete />
+              </IconButton>
+            </Box>
           </Card>
         ))}
       </Grid>

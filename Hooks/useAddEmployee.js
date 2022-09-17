@@ -9,7 +9,7 @@ import {
   LinkedIn,
   Twitter
 } from '@mui/icons-material'
-const useAddEmployee = () => {
+const useAddEmployee = (employees = []) => {
   const dispatch = useDispatch()
   const [newEmployee, setNewEmployee] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -32,15 +32,19 @@ const useAddEmployee = () => {
   //     socialmedia: [],
   //   };
   useEffect(() => {
-    if (newEmployee) {
+    const addNewEmployee = async () => {
       dispatch(
-        setInfoCompanyAction({
+        await setInfoCompanyAction({
           property: ['employees'],
-          data: { employees: newEmployee }
+          data: { employees: [...employees, newEmployee] }
         })
       )
+      setIsOpen(false)
     }
-  }, [newEmployee])
+    if (newEmployee) {
+      addNewEmployee()
+    }
+  }, [newEmployee, setIsOpen])
   return { isOpen, handleOpen, handleClose, newEmployeeFn, socialMedia }
 }
 

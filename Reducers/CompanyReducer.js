@@ -14,7 +14,7 @@ const initialState = {
   categories: [],
   workdays: [],
   workTime: { startTime: '', endTime: '' },
-  employess: [],
+  employees: [],
   loading: false,
   error: false
 }
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
         categories: action.payload.categories,
         workdays: action.payload.workdays,
         workTime: action.payload.workTime,
-        employess: action.payload.employess,
+        employees: action.payload.employees,
         loading: false,
         error: false
       }

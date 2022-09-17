@@ -87,7 +87,8 @@ export function setInfoCompanyAction ({ property, data }) {
         data
       })
       if (res.status === 201) {
-        dispatch(setInfoCompanySuccess(data))
+        dispatch(getInfoCompanyAction())
+
         Swal.fire({
           icon: 'success',
           title: 'Changes saved',
