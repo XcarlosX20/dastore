@@ -1,10 +1,19 @@
 import { Twitter, Instagram, Delete } from '@mui/icons-material'
 import { IconButton, Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { setInfoCompanyAction } from '../../Actions/ActionsCompany'
 
 import FormEmployee from './FormEmployee'
 const Employees = ({ employees }) => {
-  const deleteCategory = (category) => {
-    console.log(category)
+  const dispatch = useDispatch()
+  const deleteCategory = async (item) => {
+    const newEmployees = employees.filter(i => (i._id !== item._id))
+    dispatch(
+      await setInfoCompanyAction({
+        property: ['employees'],
+        data: { employees: newEmployees }
+      })
+    )
   }
   return (
     <>
