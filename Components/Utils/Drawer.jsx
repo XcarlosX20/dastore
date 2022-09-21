@@ -21,12 +21,8 @@ import Link from 'next/link'
 
 export default function Drawer () {
   const dispatch = useDispatch()
-  const [state, setState] = React.useState({
-    top: false,
-    left: false
-  })
-
-  const toggleDrawer = (anchor, open) => (event) => {
+  const [state, setState] = React.useState(false)
+  const toggleDrawer = (boolean) => (event) => {
     if (
       event &&
       event.type === 'keydown' &&
@@ -35,15 +31,15 @@ export default function Drawer () {
       return
     }
 
-    setState({ ...state, [anchor]: open })
+    setState(boolean)
   }
 
-  const list = (anchor) => (
+  const list = () => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: 250 }}
       role='presentation'
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
     >
       <List>
         <Link href='/orders'>
@@ -98,17 +94,17 @@ export default function Drawer () {
   const anchor = 'left'
   return (
     <div>
-      <Button color='light' onClick={toggleDrawer(anchor, true)}>
+      <Button color='light' onClick={toggleDrawer(true)}>
         <Menu />
       </Button>
       <SwipeableDrawer
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 2 }}
         anchor={anchor}
-        open={state[anchor]}
-        onClose={toggleDrawer(anchor, false)}
-        onOpen={toggleDrawer(anchor, true)}
+        open={state}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
       >
-        {list(anchor)}
+        {list()}
       </SwipeableDrawer>
     </div>
   )

@@ -19,7 +19,7 @@ const Header = ({ title }) => {
   const { companyName } = useSelector(state => state.auth.company) || ''
   return (
     <Box color='dark.main' sx={{ backgroundColor: 'dark.main' }}>
-      <header>
+
         <nav className='navbar navbar-expand-lg navbar-dark'>
           <Container>
             <Grid container direction='row' justifyContent='space-between' alignItems='center'>
@@ -51,7 +51,6 @@ const Header = ({ title }) => {
             </Grid>
           </Container>
         </nav>
-      </header>
     </Box>
   )
 }

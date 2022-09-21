@@ -13,7 +13,7 @@ import toPathName from '../../Hooks/toFormatPath'
 const Side = (props) => {
   const options = ['categories', 'work schedules', 'my company', 'Sales summary']
   const mobile = useMediaQuery('(max-width:768px)')
-  const drawerWidth = mobile ? 150 : 240
+  const drawerWidth = mobile ? '30vw' : 240
   return (
     <>
       <AppBar position='fixed'>
@@ -56,7 +56,7 @@ const Side = (props) => {
             </List>
           </Box>
         </Drawer>
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+        <Box component='main' sx={{ flexGrow: 1, p: 3, width: '70vw' }}>
           <Toolbar sx={{ height: '150px' }} />
           <main>{props.children}</main>
         </Box>

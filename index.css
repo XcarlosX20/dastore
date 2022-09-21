@@ -131,6 +131,10 @@ button[type="submit"]:disabled {
 trix-editor strong {
   font-weight: bold;
 }
+.trix-editor{
+  max-width: 200px;
+  margin: 0 auto;
+}
 .form-employees{
   display: flex;
   flex-direction: column;
