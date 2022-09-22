@@ -1,4 +1,3 @@
-import { axiosClient } from '../config/axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setInfoCompanyAction } from '../Actions/ActionsCompany'

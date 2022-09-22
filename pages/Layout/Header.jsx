@@ -20,37 +20,37 @@ const Header = ({ title }) => {
   return (
     <Box color='dark.main' sx={{ backgroundColor: 'dark.main' }}>
 
-        <nav className='navbar navbar-expand-lg navbar-dark'>
-          <Container>
-            <Grid container direction='row' justifyContent='space-between' alignItems='center'>
-              <Grid
-                item
-                justifyContent='flex-start'
-              >
-                <Link href='/products'>
-                  <h1 className='text-light'>{title || companyName}</h1>
-                </Link>
-              </Grid>
-              <Grid
-                container
-                direction='row'
-                justifyContent='flex-end'
-                alignItems='center'
-              >
-                <Link href='/newproduct'>
-                  <Button color='light'>
-                    <AddOutlined />
-                    <Typography>Product</Typography>
-                  </Button>
-                </Link>
-                <Button color='light'>
-                  <Notifications />
-                </Button>
-                <Drawer />
-              </Grid>
+      <nav className='navbar navbar-expand-lg navbar-dark'>
+        <Container>
+          <Grid container direction='row' justifyContent='space-between' alignItems='center'>
+            <Grid
+              item
+              justifyContent='flex-start'
+            >
+              <Link href='/products'>
+                <h1 className='text-light'>{title || companyName}</h1>
+              </Link>
             </Grid>
-          </Container>
-        </nav>
+            <Grid
+              container
+              direction='row'
+              justifyContent='flex-end'
+              alignItems='center'
+            >
+              <Link href='/newproduct'>
+                <Button color='light'>
+                  <AddOutlined />
+                  <Typography>Product</Typography>
+                </Button>
+              </Link>
+              <Button color='light'>
+                <Notifications />
+              </Button>
+              <Drawer />
+            </Grid>
+          </Grid>
+        </Container>
+      </nav>
     </Box>
   )
 }
