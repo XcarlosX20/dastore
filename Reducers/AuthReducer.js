@@ -1,4 +1,4 @@
-import { tokenAuth } from '../config/axios'
+import { tokenAuth } from "../config/axios";
 import {
   AUTH_COMPANY_START,
   AUTH_COMPANY_SUCCESS,
@@ -8,71 +8,66 @@ import {
   GET_COMPANY_SUCCESS,
   GET_COMPANY_ERROR,
   SETCATEGORIES_START,
-  SETCATEGORIES_SUCCESS
-} from '../types'
+  SETCATEGORIES_SUCCESS,
+} from "../types";
 const initialState = {
   company: null,
   auth: false,
-  token: '',
+  token: "",
   error: null,
-  loading: false
-}
+  loading: false,
+};
 export default function (state = initialState, action) {
   switch (action.type) {
     case SETCATEGORIES_SUCCESS:
       return {
         ...state,
-        company: { ...state.company, categories: action.payload }
-      }
-
+        company: { ...state.company, categories: action.payload },
+      };
     case AUTH_COMPANY_START:
     case SETCATEGORIES_START:
     case GET_COMPANY_START:
       return {
         ...state,
-        loading: true
-      }
+        loading: true,
+      };
     case AUTH_COMPANY_SUCCESS:
-      localStorage.setItem('token', action.payload)
+      localStorage.setItem("token", action.payload);
       // cookies
-      const date = new Date()
-      date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000)
-      const expires = date.toGMTString()
-      document.cookie = `${'token'}=${
+      const date = new Date();
+      date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
+      const expires = date.toGMTString();
+      document.cookie = `${"token"}=${
         action.payload
-      }; expires ${expires}; path="/"`
+      }; expires ${expires}; path="/"`;
       return {
         ...state,
         token: action.payload,
         loading: false,
-        auth: true
-      }
+        auth: true,
+      };
 
     case AUTH_COMPANY_ERROR:
     case GET_COMPANY_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload
-      }
+        error: action.payload,
+      };
     case GET_COMPANY_SUCCESS:
       return {
         ...state,
         loading: false,
         company: action.payload,
-        auth: true
-      }
+        auth: true,
+      };
     case LOGOUT:
-      document.cookie = 'token=; path=/;'
-      localStorage.removeItem('token')
-      tokenAuth()
-      return {
-        ...state,
-        auth: false,
-        token: null,
-        company: null
-      }
+      document.cookie = "token=; path=/;";
+      localStorage.removeItem("token");
+      tokenAuth();
+      return initialState;
+
     default:
-      return state
+      return state;
   }
 }
