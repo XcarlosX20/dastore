@@ -18,6 +18,7 @@ const Products = () => {
   const { products, error, searchResults, loading } = useSelector(
     (state) => state.products
   )
+
   const dialog = {
     zIndex: 10,
     position: 'fixed',

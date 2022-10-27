@@ -2,22 +2,11 @@ import '../styles/globals.css'
 import '../index.css'
 import '../bootstrap.min.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-// import Products from "../pages/Products.js";
-// import NewProduct from "../pages/NewProduct.js";
-// import EditProduct from "../pages/EditProduct.js";
-// import Summary from "../pages/Summary";
-// import Customization from "../pages/Customization";
 // //redux
 import { Provider } from 'react-redux'
 import store from '../store.js'
-// import Orders from "../pages/Orders";
-// import Login from "../pages/Login";
-// import PrivateRoute from "../RoutePrivateConfig/RoutePrivate";
 import { tokenAuth } from '../config/axios'
 import { useEffect } from 'react'
-// import Categories from "../pages/custom/Categories";
-// import Mycompany from "../pages/custom/Mycompany";
-// import WorkSchedules from "./Components/Pages/custom/WorkSchedules";
 function MyApp ({ Component, pageProps }) {
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -33,7 +22,7 @@ function MyApp ({ Component, pageProps }) {
         main: '#3D5A80'
       },
       warning: {
-        main: '#FFDDD2'
+        main: '#f0b9a6'
       },
       light: {
         main: '#E0FBFC'

@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AddOutlined, Notifications } from '@mui/icons-material'
+import { AddOutlined } from '@mui/icons-material'
 import { Button, Container, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
 import Drawer from '../../Components/Utils/Drawer'
 import { Box } from '@mui/system'
 import { getCompanyAction } from '../../Actions/ActionsAuth'
+import Notifications from '../../Components/Notifications'
 const Header = ({ title }) => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -15,8 +16,7 @@ const Header = ({ title }) => {
     }
     if (token) getCompany(token)
   }, [dispatch])
-
-  const { companyName } = useSelector(state => state.auth.company) || ''
+  const { companyName, _id } = useSelector(state => state.auth.company) || ''
   return (
     <Box color='dark.main' sx={{ backgroundColor: 'dark.main' }}>
 
@@ -43,9 +43,7 @@ const Header = ({ title }) => {
                   <Typography>Product</Typography>
                 </Button>
               </Link>
-              <Button color='light'>
-                <Notifications />
-              </Button>
+              <Notifications _id={_id} />
               <Drawer />
             </Grid>
           </Grid>

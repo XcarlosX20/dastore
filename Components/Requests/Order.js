@@ -28,10 +28,7 @@ const Order = ({ order, usdToBs }) => {
           <p className='card-title'>
             De: {order.dataBuyer.ci} {order.dataBuyer.correo || ''}
           </p>
-          <p className='card-title'>
-            Telefono: {order.dataBuyer.tlf}{' '}
-            <span>({order.dataBuyer.banco.name})</span>
-          </p>
+          <p className='card-title'>Telefono: {order.dataBuyer.tlf} </p>
           <Grid
             container
             direction='row'
