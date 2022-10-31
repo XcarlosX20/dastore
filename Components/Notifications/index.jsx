@@ -1,61 +1,58 @@
 import { useSelector } from 'react-redux'
-import { Box, IconButton, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem } from '@mui/material'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import { useRouter } from 'next/router'
-import useNotifications from '../../Hooks/notifications'
+import useNotifications from '../../Hooks/useNotifications'
 const Notifications = ({ _id }) => {
   const router = useRouter()
   const { notifications, alertNotification } = useSelector(state => state.company)
-  const { typesNotificationsFn, seeNotifications, editNotification, isOpen, setIsOpen, toggle } = useNotifications(_id)
-
-  const styleBox = {
-    width: '15rem',
-    padding: '1rem',
-    minHeight: '12rem',
-    maxHeight: '60vh',
-    backgroundColor: '#fff',
-    position: 'absolute',
-    top: '85%',
-    borderRadius: '4px ',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    zIndex: 10,
-    boxShadow:
-       'inset 0 -3em 3em rgba(0,0,0,0.1),0 0  0 2px rgb(255,255,255), 0.3em 0.3em 1em rgba(0,0,0,0.3)'
-  }
+  const { typesNotificationsFn,  editNotification,open,
+    anchorEl, handleClick,onClose } = useNotifications(_id)
+ 
   return (
     <>
       {alertNotification
         ? (
-          <IconButton color='warning' onClick={seeNotifications}>
+          <IconButton color='warning' onClick={(e) => {handleClick(e);}}>
             <NotificationsActiveIcon />
           </IconButton>)
         : (
-          <IconButton color='light' onClick={toggle}>
+          <IconButton color='light' onClick={(e) => { handleClick(e);}}>
             <NotificationsIcon />
           </IconButton>
           )}
-      {isOpen && <Box sx={styleBox}>
-        {notifications.length
-          ? (
-            <List>
-              {notifications.map(notification => (
+  
+        <Menu
+        id="notifications"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={onClose}
+       
+      >
+         <MenuItem autoFocus={true} disableRipple={true} sx={{cursor: 'auto'}}>
+          <List>
+              {notifications.length ? (
+                notifications.map(notification => (
                 <ListItemButton
+                divider
                   key={notification._id} sx={{ backgroundColor: notification.readed ? 'inherit' : '#CCC' }}
                   onClick={() => {
-                    toggle()
+                    onClose()
                     editNotification(notification)
                     router.push(typesNotificationsFn(notification).path)
                   }}
                 >
                   <ListItemText primary={typesNotificationsFn(notification).msg} />
                 </ListItemButton>
-              ))}
+              ))
+              )
+              : <p>there is no notifications</p>}
             </List>
-            )
-          : (<p>there is no notifications</p>)}
-      </Box>}
+         </MenuItem>
+            </Menu>
+            
+ 
     </>
   )
 }

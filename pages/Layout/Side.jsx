@@ -10,8 +10,10 @@ import Header from './Header'
 import { AppBar } from '@mui/material'
 import Link from 'next/link'
 import toPathName from '../../Hooks/toFormatPath'
+import { useRouter } from 'next/router'
 const Side = (props) => {
-  const options = ['categories', 'work schedules', 'my company', 'Sales summary']
+  const {pathname} = useRouter()
+  const options = ['categories', 'work schedules', 'my company', 'sales summary', 'location']
   const mobile = useMediaQuery('(max-width:768px)')
   const drawerWidth = mobile ? '30vw' : 240
   return (
@@ -45,11 +47,12 @@ const Side = (props) => {
                   }}
                 >
                   <ListItem
+                    selected={pathname.slice(toPathName(text).length * -1) === toPathName(text) }
                     button
                     key={text}
                     sx={{ backgroundColor: 'inherit' }}
                   >
-                    <ListItemText primary={text} />
+                    <ListItemText sx={{textTransform: 'capitalize'}} primary={text} />
                   </ListItem>
                 </Link>
               ))}
@@ -58,7 +61,7 @@ const Side = (props) => {
         </Drawer>
         <Box component='main' sx={{ flexGrow: 1, p: 3, width: '70vw' }}>
           <Toolbar sx={{ height: '150px' }} />
-          <main>{props.children}</main>
+          {props.children}
         </Box>
       </Box>
     </>
