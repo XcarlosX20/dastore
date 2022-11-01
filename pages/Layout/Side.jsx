@@ -12,7 +12,7 @@ import Link from 'next/link'
 import toPathName from '../../Hooks/toFormatPath'
 import { useRouter } from 'next/router'
 const Side = (props) => {
-  const {pathname} = useRouter()
+  const { pathname } = useRouter()
   const options = ['categories', 'work schedules', 'my company', 'sales summary', 'location']
   const mobile = useMediaQuery('(max-width:768px)')
   const drawerWidth = mobile ? '30vw' : 240
@@ -47,12 +47,12 @@ const Side = (props) => {
                   }}
                 >
                   <ListItem
-                    selected={pathname.slice(toPathName(text).length * -1) === toPathName(text) }
+                    selected={pathname.slice(toPathName(text).length * -1) === toPathName(text)}
                     button
                     key={text}
                     sx={{ backgroundColor: 'inherit' }}
                   >
-                    <ListItemText sx={{textTransform: 'capitalize'}} primary={text} />
+                    <ListItemText sx={{ textTransform: 'capitalize' }} primary={text} />
                   </ListItem>
                 </Link>
               ))}

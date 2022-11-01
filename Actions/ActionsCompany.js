@@ -1,5 +1,5 @@
-import Swal from "sweetalert2";
-import { axiosClient } from "../config/axios";
+import Swal from 'sweetalert2'
+import { axiosClient } from '../config/axios'
 import {
   SETCATEGORIES_ERROR,
   SETCATEGORIES_START,
@@ -20,193 +20,193 @@ import {
   GET_NOTIFICATIONS_SUCCESS,
   ADD_NOTIFICATION,
   EDIT_NOTIFICATION,
-  GET_NOTIFICATIONS_ERROR,
-} from "../types";
-export function setCategoriesAction(categories) {
+  GET_NOTIFICATIONS_ERROR
+} from '../types'
+export function setCategoriesAction (categories) {
   return async (dispatch) => {
-    dispatch(setCategoriesStart());
+    dispatch(setCategoriesStart())
     try {
-      const editCategories = await axiosClient.put("api/companies", {
-        categories,
-      });
+      const editCategories = await axiosClient.put('api/companies', {
+        categories
+      })
       if (editCategories.status === 202) {
-        dispatch(setCategoriesSuccess(categories));
+        dispatch(setCategoriesSuccess(categories))
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
       Swal.fire({
-        title: "There was an error",
-        icon: "info",
-      });
-      dispatch(setCategoriesError(true));
+        title: 'There was an error',
+        icon: 'info'
+      })
+      dispatch(setCategoriesError(true))
     }
-  };
+  }
 }
 const setCategoriesStart = () => ({
-  type: SETCATEGORIES_START,
-});
+  type: SETCATEGORIES_START
+})
 const setCategoriesSuccess = (categories) => ({
   type: SETCATEGORIES_SUCCESS,
-  payload: categories,
-});
+  payload: categories
+})
 const setCategoriesError = (boolean) => ({
   type: SETCATEGORIES_ERROR,
-  payload: boolean,
-});
-export function getInfoCompanyAction() {
+  payload: boolean
+})
+export function getInfoCompanyAction () {
   return async (dispatch) => {
-    dispatch(getInfoCompanyStart());
+    dispatch(getInfoCompanyStart())
     try {
-      const res = await axiosClient.get("api/companies/info");
+      const res = await axiosClient.get('api/companies/info')
       if (res.status === 200) {
-        dispatch(getInfoCompanySuccess(res.data));
+        dispatch(getInfoCompanySuccess(res.data))
       }
     } catch (err) {
       Swal.fire({
-        title: "There was an error",
-        icon: "info",
-      });
-      dispatch(getInfoCompanyError(true));
+        title: 'There was an error',
+        icon: 'info'
+      })
+      dispatch(getInfoCompanyError(true))
     }
-  };
+  }
 }
 const getInfoCompanyStart = () => ({
-  type: GET_INFOCOMPANY_START,
-});
+  type: GET_INFOCOMPANY_START
+})
 const getInfoCompanySuccess = (infoCompany) => ({
   type: GET_INFOCOMPANY_SUCCESS,
-  payload: infoCompany,
-});
+  payload: infoCompany
+})
 const getInfoCompanyError = (boolean) => ({
   type: GET_INFOCOMPANY_ERROR,
-  payload: boolean,
-});
-export function setInfoCompanyAction({ property, data }) {
+  payload: boolean
+})
+export function setInfoCompanyAction ({ property, data }) {
   return async (dispatch) => {
-    dispatch(setInfoCompanyStart());
-    console.log(property, data);
+    dispatch(setInfoCompanyStart())
+    console.log(property, data)
     // console.log(data);
     try {
-      let endpoint = "api/companies/info?";
+      let endpoint = 'api/companies/info?'
 
       property.forEach((i, index) => {
         endpoint +=
           `property${index}=` +
           i +
-          `${property.length - 1 === index ? "" : "&"}`;
-      });
+          `${property.length - 1 === index ? '' : '&'}`
+      })
       const res = await axiosClient.put(endpoint, {
-        data,
-      });
+        data
+      })
       if (res.status === 201) {
-        dispatch(getInfoCompanyAction());
-        if (property[0] !== "alertNotification") {
+        dispatch(getInfoCompanyAction())
+        if (property[0] !== 'alertNotification') {
           Swal.fire({
-            icon: "success",
-            title: "Changes saved",
+            icon: 'success',
+            title: 'Changes saved',
             showConfirmButton: false,
-            timer: 2000,
-          });
+            timer: 2000
+          })
         }
       }
     } catch (err) {
       Swal.fire({
-        title: "There was an error. please try it later",
-        icon: "info",
-      });
-      dispatch(setInfoCompanyError(true));
+        title: 'There was an error. please try it later',
+        icon: 'info'
+      })
+      dispatch(setInfoCompanyError(true))
     }
-  };
+  }
 }
 const setInfoCompanyStart = () => ({
-  type: SET_INFOCOMPANY_START,
-});
+  type: SET_INFOCOMPANY_START
+})
 const setInfoCompanySuccess = (data) => ({
   type: SET_INFOCOMPANY_SUCCESS,
-  payload: data,
-});
+  payload: data
+})
 const setInfoCompanyError = (boolean) => ({
   type: SET_INFOCOMPANY_ERROR,
-  payload: boolean,
-});
-export function addCategoriesAction(cat) {
+  payload: boolean
+})
+export function addCategoriesAction (cat) {
   return async (dispatch) => {
     dispatch({
-      type: ADD_CATEGORIES_START,
-    });
+      type: ADD_CATEGORIES_START
+    })
     try {
       const {
-        data: { category },
-      } = await axiosClient.post("api/companies/info/categories", {
-        category: cat,
-      });
+        data: { category }
+      } = await axiosClient.post('api/companies/info/categories', {
+        category: cat
+      })
       dispatch({
         type: ADD_CATEGORIES_SUCCESS,
-        payload: category,
-      });
+        payload: category
+      })
     } catch (err) {
       Swal.fire({
-        title: err?.response?.msg || "There was an error. please try it later",
-        icon: "info",
-      });
-      dispatch(setInfoCompanyError(true));
+        title: err?.response?.msg || 'There was an error. please try it later',
+        icon: 'info'
+      })
+      dispatch(setInfoCompanyError(true))
     }
-  };
+  }
 }
-export function deleteCategoryAction(category) {
+export function deleteCategoryAction (category) {
   return async (dispatch) => {
     dispatch({
-      type: DELETE_CATEGORY_START,
-    });
+      type: DELETE_CATEGORY_START
+    })
     try {
-      await axiosClient.delete(`api/companies/info/categories/${category}`);
+      await axiosClient.delete(`api/companies/info/categories/${category}`)
       dispatch({
         type: DELETE_CATEGORY_SUCCESS,
-        payload: category,
-      });
+        payload: category
+      })
     } catch (err) {
       Swal.fire({
-        title: err?.response?.msg || "There was an error. please try it later",
-        icon: "info",
-      });
-      dispatch(setInfoCompanyError(true));
+        title: err?.response?.msg || 'There was an error. please try it later',
+        icon: 'info'
+      })
+      dispatch(setInfoCompanyError(true))
     }
-  };
+  }
 }
-export function getNotificationsAction() {
+export function getNotificationsAction () {
   return async (dispatch) => {
     dispatch({
-      type: GET_NOTIFICATIONS_START,
-    });
+      type: GET_NOTIFICATIONS_START
+    })
     try {
-      const { data } = await axiosClient.get("api/companies/notifications/");
-      console.log(data);
+      const { data } = await axiosClient.get('api/companies/notifications/')
+      console.log(data)
       dispatch({
         type: GET_NOTIFICATIONS_SUCCESS,
-        payload: data,
-      });
+        payload: data
+      })
     } catch (err) {
       Swal.fire({
-        title: err?.response?.msg || "There was an error. please try it later",
-        icon: "info",
-      });
-      dispatch({ type: GET_NOTIFICATIONS_ERROR });
+        title: err?.response?.msg || 'There was an error. please try it later',
+        icon: 'info'
+      })
+      dispatch({ type: GET_NOTIFICATIONS_ERROR })
     }
-  };
+  }
 }
-export function addNotificationAction(notification) {
+export function addNotificationAction (notification) {
   return async (dispatch) => {
     dispatch({
       type: ADD_NOTIFICATION,
-      payload: notification,
-    });
-  };
+      payload: notification
+    })
+  }
 }
-export function editNotificationAction(notification) {
+export function editNotificationAction (notification) {
   return async (dispatch) => {
     dispatch({
       type: EDIT_NOTIFICATION,
-      payload: notification,
-    });
-  };
+      payload: notification
+    })
+  }
 }

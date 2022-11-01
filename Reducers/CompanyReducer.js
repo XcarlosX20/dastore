@@ -15,19 +15,19 @@ import {
   GET_CATEGORIES_SUCCESS,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_START,
-  ADD_NOTIFICATION,
-} from "../types";
+  ADD_NOTIFICATION
+} from '../types'
 const initialState = {
   alertNotification: false,
   notifications: [],
-  description: "",
+  description: '',
   categories: [],
   workdays: [],
-  workTime: { startTime: "", endTime: "" },
+  workTime: { startTime: '', endTime: '' },
   employees: [],
   loading: false,
-  error: false,
-};
+  error: false
+}
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_INFOCOMPANY_START:
@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
     case ADD_CATEGORIES_START:
     case GET_NOTIFICATIONS_START:
     case DELETE_CATEGORY_START:
-      return { ...state, loading: true, error: false };
+      return { ...state, loading: true, error: false }
     case SET_INFOCOMPANY_SUCCESS:
     case GET_INFOCOMPANY_SUCCESS:
       return {
@@ -44,51 +44,51 @@ export default (state = initialState, action) => {
         workdays: action.payload.workdays,
         workTime: {
           startTime: action.payload.workTime[0],
-          endTime: action.payload.workTime[1],
+          endTime: action.payload.workTime[1]
         },
         employees: action.payload.employees,
         alertNotification: action.payload.alertNotification,
         loading: false,
-        error: false,
-      };
+        error: false
+      }
     case ADD_CATEGORIES_SUCCESS:
       return {
         ...state,
         categories: [...state.categories, action.payload],
         loading: false,
-        error: false,
-      };
+        error: false
+      }
     case DELETE_CATEGORY_SUCCESS:
       return {
         ...state,
         loading: false,
         error: false,
-        categories: state.categories.filter((i) => i !== action.payload),
-      };
+        categories: state.categories.filter((i) => i !== action.payload)
+      }
     case GET_NOTIFICATIONS_SUCCESS:
       return {
         ...state,
         notifications: action.payload,
-        alertNotification: false,
-      };
+        alertNotification: false
+      }
     case ADD_NOTIFICATION:
       return {
         ...state,
         notifications: [action.payload, ...state.notifications],
-        alertNotification: true,
-      };
+        alertNotification: true
+      }
     case EDIT_NOTIFICATION:
       return {
         ...state,
         notifications: state.notifications.map((i) =>
           i._id === action.payload._id ? (i = action.payload) : i
-        ),
-      };
+        )
+      }
     case GET_NOTIFICATIONS_ERROR:
     case SET_INFOCOMPANY_ERROR:
     case GET_INFOCOMPANY_ERROR:
-      return { ...state, loading: false, error: true };
+      return { ...state, loading: false, error: true }
     default:
-      return state;
+      return state
   }
-};
+}
