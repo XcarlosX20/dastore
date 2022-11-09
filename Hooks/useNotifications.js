@@ -38,6 +38,7 @@ const useNotifications = (_id) => {
     if (!notification.readed) {
       socket.emit('notification:edit', notification, (cb) => {
         dispatch(editNotificationAction(cb))
+        console.log(cb)
       })
     }
   }

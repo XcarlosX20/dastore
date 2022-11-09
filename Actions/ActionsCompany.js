@@ -180,7 +180,6 @@ export function getNotificationsAction () {
     })
     try {
       const { data } = await axiosClient.get('api/companies/notifications/')
-      console.log(data)
       dispatch({
         type: GET_NOTIFICATIONS_SUCCESS,
         payload: data
