@@ -53,21 +53,23 @@ height:  ${props => (props.height || '11rem')};
   const dialogcss = {
     ...props.dialog
   }
-  if(props.fixed) return (
-    <Box
+  if (props.fixed) {
+    return (
+      <Box
         sx={{
           zIndex: 10,
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          width: "100%",
-          transform: "translate(-50%, -50%)",
-          bgcolor: "transparent",
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          width: '100%',
+          transform: 'translate(-50%, -50%)',
+          bgcolor: 'transparent'
         }}
       >
         <Loading />
       </Box>
-  )
+    )
+  }
   return (
     <>
       <Box sx={dialogcss}>

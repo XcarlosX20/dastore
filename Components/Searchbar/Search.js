@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import SearchIcon from "@mui/icons-material/Search";
-import { useDispatch } from "react-redux";
-import { getSearchResultsAction } from "../../Actions/ActionsProducts";
-import { Container } from "@mui/material";
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import Paper from '@mui/material/Paper'
+import InputBase from '@mui/material/InputBase'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
+import SearchIcon from '@mui/icons-material/Search'
+import { useDispatch } from 'react-redux'
+import { getSearchResultsAction } from '../../Actions/ActionsProducts'
+import { Container } from '@mui/material'
 const Search = ({ products }) => {
-  const dispatch = useDispatch();
-  const [value, setValue] = useState("");
+  const dispatch = useDispatch()
+  const [value, setValue] = useState('')
   useEffect(() => {
     const searchByKeywords = () => {
       if (value.length > 3) {
@@ -18,59 +18,61 @@ const Search = ({ products }) => {
           return (
             product.productname.toLowerCase().includes(value.toLowerCase()) ||
             product.price.toString().toLowerCase().includes(Number(value))
-          );
-        });
-        dispatch(getSearchResultsAction(checkProducts));
+          )
+        })
+        dispatch(getSearchResultsAction(checkProducts))
       }
-    };
-    searchByKeywords();
-  }, [value]);
-  useEffect(() => dispatch(getSearchResultsAction(null)), [value === ""]);
-  const handleInput = (e) => setValue(e.target.value);
+    }
+    searchByKeywords()
+  }, [value])
+  useEffect(() => dispatch(getSearchResultsAction(null)), [value === ''])
+  const handleInput = (e) => setValue(e.target.value)
   const input = useMemo(
     () => (
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         value={value}
-        placeholder="Search by products"
+        placeholder='Search by products'
         onChange={handleInput}
-        inputProps={{ "aria-label": "search" }}
+        inputProps={{ 'aria-label': 'search' }}
       />
     ),
     [handleInput]
-  );
+  )
   return (
     <>
       <Container
-        id="search-bar"
-        sx={{ padding: "20px" }}
-        className="search-bar"
+        id='search-bar'
+        sx={{ padding: '20px' }}
+        className='search-bar'
       >
         <Paper
-          component="form"
+          component='form'
           onSubmit={(e) => e.preventDefault()}
           sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            margin: "0 auto",
-            bgcolor: "#f7f7f9",
+            p: '2px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            margin: '0 auto',
+            bgcolor: '#f7f7f9'
           }}
         >
           {input}
-          {value.length > 0 ? (
-            <IconButton onClick={() => setValue("")}>
-              <ClearOutlinedIcon />
-            </IconButton>
-          ) : null}
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <IconButton type="submit" sx={{ p: 0.5 }} aria-label="search">
+          {value.length > 0
+            ? (
+              <IconButton onClick={() => setValue('')}>
+                <ClearOutlinedIcon />
+              </IconButton>
+              )
+            : null}
+          <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
+          <IconButton type='submit' sx={{ p: 0.5 }} aria-label='search'>
             <SearchIcon />
           </IconButton>
         </Paper>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

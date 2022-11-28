@@ -49,13 +49,12 @@ const Notifications = ({ _id }) => {
                     </ListItemButton>
                   ))
                 )
-             : !loading
-            && (
-              
-                <Typography textAlign='center'>there are no notifications</Typography>
-              
-              )
-            }
+              : !loading &&
+            (
+
+              <Typography textAlign='center'>there are no notifications</Typography>
+
+            )}
             {loading && <p>Loading...</p>}
           </List>
         </MenuItem>
