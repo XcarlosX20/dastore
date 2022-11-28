@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux'
-import { IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem } from '@mui/material'
+import { IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import { useRouter } from 'next/router'
 import useNotifications from '../../Hooks/useNotifications'
 const Notifications = ({ _id }) => {
   const router = useRouter()
-  const { notifications, alertNotification } = useSelector(state => state.company)
+  const { notifications, alertNotification, loading } = useSelector(state => state.company)
   const {
     typesNotificationsFn, editNotification, open,
     anchorEl, handleClick, onClose
@@ -49,7 +49,14 @@ const Notifications = ({ _id }) => {
                     </ListItemButton>
                   ))
                 )
-              : <p>there is no notifications</p>}
+             : !loading
+            && (
+              
+                <Typography textAlign='center'>there are no notifications</Typography>
+              
+              )
+            }
+            {loading && <p>Loading...</p>}
           </List>
         </MenuItem>
       </Menu>

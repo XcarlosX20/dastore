@@ -1,7 +1,8 @@
-import { io } from 'socket.io-client'
-const socket = io(process.env.NEXT_PUBLIC_SOCKET_ENDPOINT, {
-  transports: ['websocket']
-})
-socket.open()
+import { io } from "socket.io-client";
+import { SOCKET_ENDPOINT } from "../variables";
+const socket = io(SOCKET_ENDPOINT, {
+  transports: ["websocket"],
+});
+socket.open();
 
-export default socket
+export default socket;

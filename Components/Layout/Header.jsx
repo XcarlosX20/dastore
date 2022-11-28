@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AddOutlined } from '@mui/icons-material'
 import { Button, Container, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
-import Drawer from '../../Components/Utils/Drawer'
+import Drawer from '../Utils/Drawer'
 import { Box } from '@mui/system'
 import { getCompanyAction } from '../../Actions/ActionsAuth'
-import Notifications from '../../Components/Notifications'
+import Notifications from '../Notifications'
 const Header = ({ title }) => {
   const dispatch = useDispatch()
   useEffect(() => {

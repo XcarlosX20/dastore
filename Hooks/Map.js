@@ -1,61 +1,101 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
-import 'leaflet/dist/leaflet.css'
-import { MapContainer, TileLayer, Marker, useMap, Popup } from 'react-leaflet'
+import { useRef, useMemo, memo } from "react";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
+import { useDispatch, useSelector } from "react-redux";
+import { setInfoCompanyAction } from "../Actions/ActionsCompany";
+import { Button } from "@mui/material";
+import { Box } from "@mui/system";
+import Loading from "../Components/Utils/Loading";
 
-export function ChangeView ({ coords }) {
-  const map = useMap()
-  map.setView(coords, 12)
-  return null
+export function ChangeView({ coords }) {
+  const map = useMap();
+  map.setView(coords, 12);
+  return null;
 }
 
-export default function Map () {
-  const [geoData, setGeoData] = useState({ lat: 11.3946, lng: -69.681 })
-
-  const center = [geoData.lat, geoData.lng]
-  function DraggableMarker () {
-    const [draggable, setDraggable] = useState(false)
-    const [position, setPosition] = useState(center)
-    const markerRef = useRef(null)
+const Map = () => {
+  const dispatch = useDispatch();
+  const { lat, lng } = useSelector((state) => state.company.location);
+  const editLocation = async (newLocation) => {
+    await dispatch(
+      setInfoCompanyAction({
+        property: ["location"],
+        data: { location: newLocation },
+      })
+    );
+  };
+  const buttonRef = useRef(null);
+  const center = [lat, lng];
+  function DraggableMarker() {
+    const markerRef = useRef(null);
     const eventHandlers = useMemo(
       () => ({
-        dragend () {
-          const marker = markerRef.current
+        async dragend() {
+          const marker = markerRef.current;
           if (marker != null) {
-            setPosition(marker.getLatLng())
+            let newCoords = {
+              lat: marker.getLatLng().lat,
+              lng: marker.getLatLng().lng,
+            };
+            localStorage.setItem("handlingLocation", JSON.stringify(newCoords));
+            buttonRef.current.style.visibility = "visible";
+            buttonRef.current.style.position = "relative";
           }
-        }
+        },
       }),
       []
-    )
-    const toggleDraggable = useCallback(() => {
-      setDraggable((d) => !d)
-    }, [])
+    );
 
     return (
-      <Marker
-        draggable={draggable}
-        eventHandlers={eventHandlers}
-        position={position}
-        ref={markerRef}
-      >
-        <Popup minWidth={90}>
-          <span onClick={toggleDraggable}>
-            {draggable
-              ? 'Marker is draggable'
-              : 'Click here to make marker draggable'}
-          </span>
-        </Popup>
-      </Marker>
-    )
+      <>
+        <Marker
+          draggable
+          eventHandlers={eventHandlers}
+          position={center}
+          ref={markerRef}
+        >
+          <Popup minWidth={90}>
+            <span>Marker is draggable</span>
+          </Popup>
+        </Marker>
+      </>
+    );
+  }
+  const saveLocation = async (e) => {
+    const newLocation = JSON.parse(localStorage.getItem("handlingLocation"));
+    //setGeoData(newLocation);
+    await editLocation(newLocation);
+    localStorage.removeItem("handlingLocation");
+    e.target.style.visibility = "hidden";
+    buttonRef.current.style.position = "absolute";
+  };
+  if (!lat && !lng) {
+    return <Loading fixed />;
   }
   return (
-    <MapContainer center={center} zoom={8} style={{ height: 'inherit' }}>
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-      />
-      {geoData.lat && geoData.lng && <DraggableMarker />}
-      <ChangeView coords={center} />
-    </MapContainer>
-  )
-}
+    <>
+      <Button
+        size="small"
+        variant="contained"
+        ref={buttonRef}
+        onClick={saveLocation}
+        sx={{
+          visibility: "hidden",
+          position: "absolute",
+          marginBottom: "0.8rem",
+        }}
+      >
+        Save Changes
+      </Button>
+      <MapContainer center={center} zoom={8} style={{ height: "inherit" }}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {lat && lng && <DraggableMarker />}
+        <ChangeView coords={center} />
+      </MapContainer>
+    </>
+  );
+};
+export default memo(Map);
