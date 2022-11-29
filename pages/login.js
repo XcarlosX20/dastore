@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Loading from "../Components/Utils/Loading";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff, WindowSharp } from "@mui/icons-material";
 import { authCompanyAction } from "../Actions/ActionsAuth";
 // import { showAlertAction } from "../Actions/ActionsAlert";
 import { useState, useEffect } from "react";
@@ -61,7 +61,8 @@ const Login = () => {
   };
   useEffect(() => {
     if (auth) {
-      router.push(router.asPath === "/login" ? "/products" : router.reload());
+      console.log(router);
+      window.location.reload();
     }
   }, [auth]);
   useEffect(() => {
