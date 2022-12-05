@@ -62,11 +62,14 @@ const Login = () => {
   useEffect(() => {
     if (auth) {
       console.log(router);
+      if (router.asPath === "/login") {
+        return router.push("products");
+      }
       window.location.reload();
     }
   }, [auth]);
   useEffect(() => {
-    const showAlert = router.asPath !== "/login";
+    const showAlert = router.asPath !== "/login" && !auth;
     return (
       showAlert &&
       Swal.fire({
@@ -78,7 +81,7 @@ const Login = () => {
         timer: 2000,
       })
     );
-  }, [router.asPath]);
+  }, [router.asPath, auth]);
 
   const dialog = {
     zIndex: 10,
@@ -173,7 +176,7 @@ const Login = () => {
                         sx={{ textTransform: "initial" }}
                         color="info"
                       >
-                        Did you forget your password?
+                        Did you forget the password?
                       </Button>
                     </Link>
                   </Grid>
