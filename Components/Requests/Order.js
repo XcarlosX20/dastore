@@ -22,7 +22,11 @@ const Order = ({ order, usdToBs }) => {
       <div className="card mb-3 rounded">
         <div
           className={`card-header ${
-            order.state ? "bg-dark text-light" : "bg-warning"
+            order.state
+              ? "bg-dark text-light"
+              : order.error
+              ? "bg-danger text-light"
+              : "bg-warning"
           }`}
         >
           <p className="card-title">
@@ -43,10 +47,14 @@ const Order = ({ order, usdToBs }) => {
               Fecha: {moment(order.date).format(format)}
             </p>
             <Typography variant="span">
-              {order.state ? "Completada" : "Pendiente"}
+              {order.state
+                ? "Completada"
+                : order.error
+                ? "Rechazada"
+                : "Pendiente"}
             </Typography>
           </Grid>
-          {!order.state ? (
+          {!order.state && !order.error ? (
             <>
               <button
                 onClick={() => {
@@ -73,6 +81,7 @@ const Order = ({ order, usdToBs }) => {
                     confirmButtonText: "Siguiente",
                     cancelButtonText: "Cancelar",
                   }).then((result) => {
+                    console.log(result);
                     if (result.value === "problem1") {
                       Swal.fire({
                         input: "textarea",
@@ -84,6 +93,14 @@ const Order = ({ order, usdToBs }) => {
                         showCancelButton: true,
                       }).then((result) => {
                         if (result.isConfirmed) {
+                          editOrderFn({
+                            ...order,
+                            error: true,
+                            typeError: {
+                              header: "problem1",
+                              body: result.value,
+                            },
+                          });
                           Swal.fire({
                             title: "En breve será confirmado!",
                             icon: "info",
@@ -101,6 +118,14 @@ const Order = ({ order, usdToBs }) => {
                         showCancelButton: true,
                       }).then((result) => {
                         if (result.isConfirmed) {
+                          editOrderFn({
+                            ...order,
+                            error: true,
+                            typeError: {
+                              header: "problem2",
+                              body: result.value,
+                            },
+                          });
                           Swal.fire({
                             title: "En breve será confirmado!",
                             icon: "info",
@@ -112,7 +137,7 @@ const Order = ({ order, usdToBs }) => {
                 }}
                 className="btn bg-danger text-white"
               >
-                Eliminar
+                Rechazar
               </button>
             </>
           ) : null}
