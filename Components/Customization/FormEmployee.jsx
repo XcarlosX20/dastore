@@ -42,8 +42,6 @@ const FormEmployee = ({ employees }) => {
     // console.log(item)
     const socialMedia = form.socialMedia
     delete socialMedia[item.name]
-
-    // console.log(socialMedia.get('socialMedia', form.socialMedia ))
     setForm({ ...form, socialMedia })
     setSocialMediaSelected(socialMediaSelected.filter(i => (
       i.id != item.id

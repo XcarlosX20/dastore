@@ -1,12 +1,13 @@
-import axios from 'axios'
-import { backendApi } from './variables'
+import axios from "axios";
+import { backendApi } from "./variables";
 export const axiosClient = axios.create({
-  baseURL: backendApi
-})
+  baseURL: backendApi,
+});
+console.log(backendApi);
 export const tokenAuth = (token) => {
   if (token) {
-    axiosClient.defaults.headers.common['x-auth-token'] = token
+    axiosClient.defaults.headers.common["x-auth-token"] = token;
   } else {
-    delete axiosClient.defaults.headers.common['x-auth-token']
+    delete axiosClient.defaults.headers.common["x-auth-token"];
   }
-}
+};

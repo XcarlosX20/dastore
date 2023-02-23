@@ -71,8 +71,10 @@ h1 a.text-light:hover {
 input[type="file"] {
   max-width: 100%;
 }
-.image-drop {
-  text-align: center;
+.image-drop{
+  margin: 0 auto;
+  max-width: 80vw;
+  height: auto;
 }
 .img-view {
   margin: 0 auto;
@@ -146,6 +148,9 @@ trix-editor strong {
   font-size: 1rem;
 }
 @media (min-width: 768px) {
+  .image-drop{
+  max-width: 50vw;
+}
   .search-bar {
     width: 75% !important;
   }

@@ -9,11 +9,11 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import Header from './Header'
 import { AppBar } from '@mui/material'
 import Link from 'next/link'
-import toPathName from '../../Hooks/toFormatPath'
 import { useRouter } from 'next/router'
+import { slug } from '../../Actions/helpers'
 const Side = (props) => {
   const { pathname } = useRouter()
-  const options = ['categories', 'work schedules', 'my company', 'sales summary', 'location']
+  const options = ['categories', 'work schedules', 'my company', 'sales summary', 'location', 'pay methods']
   const mobile = useMediaQuery('(max-width:768px)')
   const drawerWidth = mobile ? '30vw' : 240
   return (
@@ -41,13 +41,13 @@ const Side = (props) => {
               {options.map((text) => (
                 <Link
                   key={text}
-                  href={'/customization/' + toPathName(text)}
+                  href={'/customization/' + slug(text)}
                   activeStyle={{
                     backgroundColor: '#f1f1f1'
                   }}
                 >
                   <ListItem
-                    selected={pathname.slice(toPathName(text).length * -1) === toPathName(text)}
+                    selected={pathname.slice(slug(text).length * -1) === slug(text)}
                     button
                     key={text}
                     sx={{ backgroundColor: 'inherit' }}
