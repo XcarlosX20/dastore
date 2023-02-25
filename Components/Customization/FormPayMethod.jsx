@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Delete } from "@mui/icons-material";
-import { Button, Card, CardActions, CardContent, Grid, TextField, Typography } from "@mui/material";
+import { CancelOutlined } from "@mui/icons-material";
+import { Button, Card, CardContent, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { formatKeys } from "../../Actions/helpers";
+import { useForm } from "react-hook-form";
 const FormPayMethod = () => {
     const optionsToChoose = [
     {
@@ -38,6 +39,21 @@ const FormPayMethod = () => {
     },
   ];
    const [optionsSelected, setOptionsSelected] = useState([])
+   const [form, setForm] = useState([])
+   const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm()
+    const onSubmit = (e) => {
+      e.preventDefault()
+  }
+    const handleInput = ({e, optionName}) => {
+      e.preventDefault();
+      //.map(product => product._id === action.payload._id ? product = action.payload : product)
+      const newTyping = {name: optionName, [e.target.id]: e.target.value}
+      setForm(form.map(i => i.name == newTyping.name ? i = {...i, ...newTyping} : i))
+    }
     const isDisabled = (selected) => {
     return optionsSelected.some(i => (
     i.id === selected
@@ -46,13 +62,26 @@ const FormPayMethod = () => {
     }
     const addOptionsMethods = (opt) => {
       setOptionsSelected([...optionsSelected, opt])
+      const newFormToWrite = {};
+      Object.keys(opt).forEach(i => {
+        if(i === 'name'|| i === 'id' || i === 'imgUrl'){
+          return newFormToWrite[i] = opt[i]
+        }
+        else{
+          newFormToWrite[i] = ''
+        }
+      })
+      setForm([...form, newFormToWrite] )
     }
     const deleteOptionSelected = (opt) => {
       setOptionsSelected(optionsSelected.filter(i => (
       i.id !== opt.id
-    )))}
+    )))
+     setForm(form.filter(i => (i.id !== opt.id)))
+  }
     return ( 
     <>
+    <Typography>Select the option and fill the form</Typography>
     <Grid container gap={2} direction={'row'}>
     {optionsToChoose.length && (
         optionsToChoose.map(i => (
@@ -73,28 +102,40 @@ const FormPayMethod = () => {
         ))
     )}
     </Grid>
-    <Grid container gap={3} direction={'column'}>
+    <form onSubmit={onSubmit}>
+          <Grid container my={2} direction={'row'} columns={{sm:12, md: 12 }}>
         {optionsSelected.length !== 0 && (
             optionsSelected.map(option => (
-              <Card sx={{ minWidth: 180 }} key={option.id}>
+              <Grid p={1} item sm={12} md={6}>
+                <Card  key={option.id}>
                 <CardContent>
-                  <Grid mb={1} container flexDirection={'row'} justifyContent={'space-between'}>
-                    <Typography mb={2}>{option.name}:</Typography>
-                    <Button color="error" onClick={() => deleteOptionSelected(option)}>X</Button>
+                  <Grid mb={1} container direction={{sm: 'column'}} >
+                    <Grid container justifyContent={'flex-end'}>
+                      <IconButton color="error" onClick={() => deleteOptionSelected(option)}>
+                        <CancelOutlined/>
+                      </IconButton>                    
+                    </Grid>
+                    <Grid container justifyContent={'flex-start'}>
+                      <Typography mb={2}>{option.name}:</Typography>
+                    </Grid>
                   </Grid>
                   <Grid container direction={'column'} gap={1} >
                   {Object.keys(option).map(i =>  
                     i !== "name" &&
                     i !== "id" &&
                     i !== "imgUrl" && (
-                      <TextField label={formatKeys(i)} />      
+                      <TextField color={errors[i] ? 'error':'primary'} label={formatKeys(i)} id={i} onChange={(e) => handleInput({e, optionName: option.name})} required />      
                     ))}
                     </Grid>
                   </CardContent>
                   </Card>
+              </Grid>
             ))
         )}
     </Grid>
+    <Button type="submit">Save</Button>
+    </form>
+    
     </> );
 }
  

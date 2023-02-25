@@ -3,7 +3,6 @@ import { backendApi } from "./variables";
 export const axiosClient = axios.create({
   baseURL: backendApi,
 });
-console.log(backendApi);
 export const tokenAuth = (token) => {
   if (token) {
     axiosClient.defaults.headers.common["x-auth-token"] = token;
