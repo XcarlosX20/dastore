@@ -269,15 +269,16 @@ const EditProduct = () => {
                   </option>
                   <option value='new'>-- Crear nueva categoria-- </option>
                   {categories.length &&
-                    categories.map((category) =>
+                    categories.map((category, index) =>
                       category !== editProduct.category
                         ? (
-                          <option value={category}>
+                          <option key={category} value={category}>
                             {category.toUpperCase()}
                           </option>
                           )
                         : (
                           <option
+                            key={index}
                             selected
                             value={editProduct.category.toUpperCase()}
                           >
