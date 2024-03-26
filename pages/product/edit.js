@@ -266,19 +266,22 @@ const EditProduct = () => {
                   </option>
                   <option value="new">-- Crear nueva categoria-- </option>
                   {categories.length &&
-                    categories.map((category) =>
-                      category !== editProduct.category ? (
-                        <option value={category}>
-                          {category.toUpperCase()}
-                        </option>
-                      ) : (
-                        <option
-                          selected
-                          value={editProduct.category.toUpperCase()}
-                        >
-                          {editProduct.category.toUpperCase()}
-                        </option>
-                      )
+                    categories.map((category, index) =>
+                      category !== editProduct.category
+                        ? (
+                          <option key={category} value={category}>
+                            {category.toUpperCase()}
+                          </option>
+                          )
+                        : (
+                          <option
+                            key={index}
+                            selected
+                            value={editProduct.category.toUpperCase()}
+                          >
+                            {editProduct.category.toUpperCase()}
+                          </option>
+                          )
                     )}
                 </select>
               </div>
