@@ -105,8 +105,8 @@ const FormPayMethod = () => {
     <form onSubmit={onSubmit}>
           <Grid container my={2} direction={'row'} columns={{sm:12, md: 12 }}>
         {optionsSelected.length !== 0 && (
-            optionsSelected.map(option => (
-              <Grid p={1} item sm={12} md={6}>
+            optionsSelected.map((option, index) => (
+              <Grid key={index} p={1} item sm={12} md={6}>
                 <Card  key={option.id}>
                 <CardContent>
                   <Grid mb={1} container direction={{sm: 'column'}} >
@@ -120,11 +120,11 @@ const FormPayMethod = () => {
                     </Grid>
                   </Grid>
                   <Grid container direction={'column'} gap={1} >
-                  {Object.keys(option).map(i =>  
+                  {Object.keys(option).map((i, index) =>  
                     i !== "name" &&
                     i !== "id" &&
                     i !== "imgUrl" && (
-                      <TextField color={errors[i] ? 'error':'primary'} label={formatKeys(i)} id={i} onChange={(e) => handleInput({e, optionName: option.name})} required />      
+                      <TextField key={index} color={errors[i] ? 'error':'primary'} label={formatKeys(i)} id={i} onChange={(e) => handleInput({e, optionName: option.name})} required />      
                     ))}
                     </Grid>
                   </CardContent>

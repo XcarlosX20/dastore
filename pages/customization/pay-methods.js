@@ -13,7 +13,7 @@ import FormPayMethod from "../../Components/Customization/FormPayMethod";
 import Side from "../../Components/Layout/Side";
 import Loading from "../../Components/Utils/Loading";
 import useModal from "../../Hooks/useModal";
-const payMethods = () => {
+const PayMethods = () => {
   const { handleOpen, handleClose, ModalComponent, isOpen } = useModal();
   const loading = useSelector((state) => state.company.loading);
   const payMethodsTaken = useSelector((state) => state.company.payMethods);
@@ -36,8 +36,8 @@ const payMethods = () => {
       )}
       <Grid container spacing={2}>
         {payMethodsTaken.length !== 0
-          ? payMethodsTaken.map((i) => (
-              <Grid item xs={12} sm={6} lg={4}>
+          ? payMethodsTaken.map((i, index) => (
+              <Grid key={index} item xs={12} sm={6} lg={4}>
                 <Card sx={{ width: "100%" }}>
                   <CardContent>
                     <Grid
@@ -65,7 +65,7 @@ const payMethods = () => {
             ))
           : !loading && (
               <Typography>
-                You don&apos;t any method pay added. Let's add any one
+                You don&apos;t any method pay added. Let&apos;s add any one
               </Typography>
             )}
       </Grid>
@@ -81,4 +81,4 @@ const payMethods = () => {
   );
 };
 
-export default payMethods;
+export default PayMethods;
